@@ -27,13 +27,13 @@ class Samus extends Entity {
         this.firstJumpFrame = false;
 
         //Animation(spriteSheet, startX, startY, frameWidth, frameHeight, frameDuration, frames, loop, reverse)
-        this.runningAnimation = new Animation(this.assetManager.getAsset( '../img/samusRunning.png'),
+        this.runningAnimation = new Animation(this.assetManager.getAsset( './img/samusRunning.png'),
             0, 0, 50, 50, 0.1, 8, true, false);
 
-        this.jumpAnimation = new Animation(this.assetManager.getAsset("../img/samusJump.png"), 
+        this.jumpAnimation = new Animation(this.assetManager.getAsset('./img/samusJump.png'), 
             0, 0, 50, 50, 0.1, 6, true, false);
 
-        this.shootAnimation = new Animation(this.assetManager.getAsset("../img/samusRunShoot.png"),
+        this.shootAnimation = new Animation(this.assetManager.getAsset('./img/samusRunShoot.png'),
             0, 0, 50, 50, 0.1, 8, true, false);
         //this.animation = this.runningAnimation;
         this.animation = this.runningAnimation;
@@ -114,7 +114,7 @@ class Rocket extends Entity {
     constructor(game, startX, startY) {
         super(game, startX, startY, 0, 0);
         //Animation(spriteSheet, startX, startY, frameWidth, frameHeight, frameDuration, frames, loop, reverse)
-        this.animation = new Animation(this.game.assetManager.getAsset("../img/weapons.png"),
+        this.animation = new Animation(this.game.assetManager.getAsset('./img/weapons.png'),
             68, 30, 24, 17, 1, 1, true, false);
         this.deltaX = ROCKET_SPEED;
 
@@ -142,7 +142,7 @@ class Rocket extends Entity {
 class RocketExplosion extends Entity {
     constructor(game, startX, startY) {
         super(game, startX, startY, -100, 0);
-        var spritesheet = this.game.assetManager.getAsset("../img/rocketExplosion.png");
+        var spritesheet = this.game.assetManager.getAsset('./img/rocketExplosion.png');
 
         //Animation(spriteSheet, startX, startY, frameWidth, frameHeight, frameDuration, frames, loop, reverse)
         this.animation = new Animation(spritesheet, 0, 0, 64, 64, 0.2, 15, false, false);
