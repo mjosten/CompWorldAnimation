@@ -234,21 +234,16 @@ window.requestAnimFrame = (function () {
 class GameEngine {
     constructor(assetManager) {
         this.assetManager = assetManager;
-        this.showOutlines = true; //debug bit
+        this.showOutlines = false; //debug bit
         this.entities = [];
         this.parallaxManager = null;
-        this.lasers = [];
-        this.droids = [];
-        this.tiles = [];
         this.ctx = null;
         this.surfaceWidth = null;
         this.surfaceHeight = null;
-        this.moveLeft = null;
-        this.moveRight = null;
         this.mouse = {x: 100, y: 100};
         this.click = null;
-        this.Zerlin = null;
         this.keys = {};
+        
 
     }
     init(ctx) {
@@ -256,7 +251,6 @@ class GameEngine {
         this.surfaceWidth = this.ctx.canvas.width;
         this.surfaceHeight = this.ctx.canvas.height;
         this.timer = new Timer();
-        this.Zerlin = new Zerlin(this);
         this.startInput();
         console.log('game initialized');
     }
@@ -277,26 +271,7 @@ class GameEngine {
     }
     update() {
         this.parallaxManager.update();
-        this.Zerlin.update();
         
-        for (var i = this.droids.length -1; i >= 0; i--) {
-            this.droids[i].update();
-            if (this.droids[i].removeFromWorld) {
-                this.droids.splice(i, 1);
-            }
-        }
-        for (var i = this.lasers.length -1; i >= 0; i--) {
-            this.lasers[i].update();
-            if (this.lasers[i].removeFromWorld) {
-                this.lasers.splice(i, 1);
-            }
-        }
-        for (var i = this.tiles.length -1; i >= 0; i--) {
-            this.tiles[i].update();
-            // if (this.tiles[i].removeFromWorld) { // TODO: needed removeFromWorld for tiles?
-            //     this.entities.splice(i, 1);
-            // }
-        }
         for (var i = this.entities.length -1; i >= 0; i--) {
             this.entities[i].update();
             if (this.entities[i].removeFromWorld) {
@@ -310,25 +285,10 @@ class GameEngine {
         this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
         this.ctx.save();
         this.parallaxManager.draw();
-        this.Zerlin.draw();
-        for (var i = 0; i < this.droids.length; i++) {
-            this.droids[i].draw(this.ctx);
-        }
-        for (var i = 0; i < this.lasers.length; i++) {
-            this.lasers[i].draw(this.ctx);
-        }
-        for (var i = 0; i < this.tiles.length; i++) {
-            this.tiles[i].draw(this.ctx);
-        }
+        
         for (var i = 0; i < this.entities.length; i++) {
             this.entities[i].draw(this.ctx);
         }
-
-        // // draws axis' for debugging placement of entities
-        // this.ctx.beginPath();
-        // this.ctx.moveTo(this.ctx.canvas.width * (2 - PHI), 0);
-        // this.ctx.lineTo(this.ctx.canvas.width * (2 - PHI), this.ctx.canvas.height);
-        // this.ctx.stroke();
 
         this.ctx.restore();
     }
@@ -336,21 +296,7 @@ class GameEngine {
         // console.log('added entity');
         this.entities.push(entity);
     }
-    addDroid(droid) {
-        console.log('added droid');
-        this.droids.push(droid);
-        // this.entities.push(droid);
-    }
-    addLaser(laser) {
-        console.log('added laser');
-        this.lasers.push(laser);
-        // this.entities.push(laser);
-    }
-    addTile(tile) {
-        console.log('added laser');
-        this.tiles.push(tile);
-        // this.entities.push(tile);
-    }
+    
     startInput () {
         console.log('Starting input');
         var that = this;
@@ -381,10 +327,6 @@ class GameEngine {
         // Mouse
         this.ctx.canvas.addEventListener("click", function(e) {
             that.click = getXandY(e);
-            //debug
-            //that.addEntity(new DroidLaser(that, 300, 300, 20, that.click.x, that.click.y, 20, 10));
-            //console.log("click X: %d, Y: %d", that.click.x, that.click.y);
-            //console.log(e);
         }, false);
 
         this.ctx.canvas.addEventListener("contextmenu", function (e) {
@@ -393,7 +335,6 @@ class GameEngine {
 
         this.ctx.canvas.addEventListener("mousemove", function(e) {
             that.mouse = getXandY(e);
-            //console.log(e);
         }, false);
 
         this.ctx.canvas.addEventListener("mousedown", function (e) {
@@ -407,10 +348,6 @@ class GameEngine {
                 that.rightClickDown = false;
             }
         }, false);
-    
-
-
-        console.log('Input started');
     }
 
 }
@@ -448,13 +385,13 @@ class Entity {
         
     }
     draw() {
-        // if (this.game.showOutlines && this.radius) {
-        //     this.game.ctx.beginPath();
-        //     this.game.ctx.strokeStyle = "green";
-        //     this.game.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        //     this.game.ctx.stroke();
-        //     this.game.ctx.closePath();
-        // }
+        if (this.game.showOutlines && this.radius) {
+            this.game.ctx.beginPath();
+            this.game.ctx.strokeStyle = "green";
+            this.game.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+            this.game.ctx.stroke();
+            this.game.ctx.closePath();
+        }
     }
     rotateAndCache(image, angle) {
         var offscreenCanvas = document.createElement('canvas');
@@ -485,27 +422,4 @@ class Entity {
     
 }
 
-class BoundingBox {
 
-    constructor(x, y, width, height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-
-        this.left = x;
-        this.top = y;
-        this.right = this.left + width;
-        this.bottom = this.top + height;
-    }
-
-    collide(oth) {
-        if ((this.right > oth.left)
-         && (this.left < oth.right) 
-         && (this.top < oth.bottom) 
-         && (this.bottom > oth.top)) {
-            return true;
-        }
-        return false;
-    }
-}
