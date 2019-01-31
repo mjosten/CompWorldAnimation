@@ -86,10 +86,10 @@ class AssetManager {
 	        0, 0, 0));
 	    parallaxBackgroundManager.addBackgroundImage(
 	        new ParallaxBackground(gameEngine, AM.getAsset('./img/stars.png'), 
-	        10, 0, 200));
+	        100, 0, 200));
 	    parallaxBackgroundManager.addBackgroundImage(
 	        new ParallaxBackground(gameEngine, AM.getAsset('./img/cavernTrans.png'), 
-		    20, 0, 0));
+		    200, 0, 0));
 		
 	   
 	    gameEngine.parallaxManager = parallaxBackgroundManager;

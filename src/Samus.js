@@ -141,11 +141,11 @@ class Rocket extends Entity {
 
 class RocketExplosion extends Entity {
     constructor(game, startX, startY) {
-        super(game, startX, startY, -100, 0);
+        super(game, startX, startY, -300, 0);
         var spritesheet = this.game.assetManager.getAsset('./img/rocketExplosion.png');
 
         //Animation(spriteSheet, startX, startY, frameWidth, frameHeight, frameDuration, frames, loop, reverse)
-        this.animation = new Animation(spritesheet, 0, 0, 64, 64, 0.2, 15, false, false);
+        this.animation = new Animation(spritesheet, 0, 0, 64, 64, 0.02, 15, false, false);
 
         this.x = this.x - this.animation.frameWidth * ROCKET_EXPLOSION_SCALE / 2;
         this.y = this.y - this.animation.frameHeight * ROCKET_EXPLOSION_SCALE / 2;
