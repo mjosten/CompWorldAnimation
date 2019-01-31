@@ -58,17 +58,17 @@ class AssetManager {
 	
 
 	
-	AM.queueDownload('../img/blackBackground.png');
+	AM.queueDownload('./img/blackBackground.png');
 	//AM.queueDownload('../img/cavern.png');
-	AM.queueDownload('../img/cavernTrans.png');
-	AM.queueDownload('../img/stars.png');
-	AM.queueDownload('../img/samus.png');
-	AM.queueDownload('../img/weapons.png');
-	AM.queueDownload('../img/rocketExplosion.png');
+	AM.queueDownload('./img/cavernTrans.png');
+	AM.queueDownload('./img/stars.png');
+	AM.queueDownload('./img/samus.png');
+	AM.queueDownload('./img/weapons.png');
+	AM.queueDownload('./img/rocketExplosion.png');
 
-	AM.queueDownload('../img/samusRunning.png');
-	AM.queueDownload('../img/samusJump.png');
-	AM.queueDownload('../img/samusRunShoot.png');
+	AM.queueDownload('./img/samusRunning.png');
+	AM.queueDownload('./img/samusJump.png');
+	AM.queueDownload('./img/samusRunShoot.png');
 
 
 	
@@ -82,13 +82,13 @@ class AssetManager {
 
 	    const parallaxBackgroundManager = new ParallaxBackgroundManager(gameEngine); 
 	    parallaxBackgroundManager.addBackgroundImage(
-	        new ParallaxBackground(gameEngine, AM.getAsset('../img/blackBackground.png'), 
+	        new ParallaxBackground(gameEngine, AM.getAsset('./img/blackBackground.png'), 
 	        0, 0, 0));
 	    parallaxBackgroundManager.addBackgroundImage(
-	        new ParallaxBackground(gameEngine, AM.getAsset('../img/stars.png'), 
+	        new ParallaxBackground(gameEngine, AM.getAsset('./img/stars.png'), 
 	        10, 0, 200));
 	    parallaxBackgroundManager.addBackgroundImage(
-	        new ParallaxBackground(gameEngine, AM.getAsset('../img/cavernTrans.png'), 
+	        new ParallaxBackground(gameEngine, AM.getAsset('./img/cavernTrans.png'), 
 		    20, 0, 0));
 		
 	   
